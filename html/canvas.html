@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+    	<canvas id='c1' width='400' height='400'></canvas>
+    	<script>
+    		//1.获取canvas 
+    		var c1 = document.getElementById('c1');
+    		//2.获取绘制环境
+    		var cx = c1.getContext("2d");
+    		
+
+    		//设置宽度和高度
+    		//c1.style.width = "400px"
+    		//c1.style.height = "400px"
+    		//画布会被拉伸  这种写法会造成额外的问题（不赞成这样的写法）
+    		
+    		//使用内敛样式表
+    		// c1.width = '400';//注意  不要加px单位
+    		// c1.height = '400';
+    		
+    		cx.beginPath();//开始绘制
+    		//设置绘制起点
+    		cx.moveTo(0,0);
+    		cx.lineTo(300,300);
+    		cx.closePath();
+    		cx.strokeStyle = '#B7182B';
+    		cx.linwidth = 10;
+    		cx.stroke();
+
+    		cx.beginPath();
+    		cx.moveTo(150,150);
+    		cx.lineTo(150,0);
+    		cx.lineTo(0,0);
+    		cx.closePath();    		
+    		cx.stroke();
+
+    	</script>
+    	<canvas width='400' height='400' id='c2'></canvas>
+    	<script>
+    	var c2 = document.getElementById('c2');
+    	var cx = c2.getContext("2d");
+
+    	cx.beginPath();
+    	cx.moveTo(50,50);
+    	cx.lineTo(350,100);
+    	cx.lineTo(250,50);
+    	cx.lineTo(300,250);
+    	cx.closePath();
+    	cx.lineWidth = 5;
+    	cx.lineJoin = 'bevel';
+    	cx.strokeStyle = 'green';
+    	cx.stroke();
+    	cx.fillStyle = 'pink';
+    	cx.fill();
+
+    	</script>
+    	<canvas id='c3' width='400' height='400'></canvas>
+    	<script>
+    	var c3 = document.getElementById('c3');
+    	var cx = c3.getContext("2d");
+    	cx.fillStyle = '#DFE131';
+    	//绘制空心矩形  默认边框是1
+    	cx.lineWidth = 5;
+    	cx.fillRect(10, 10, 100, 100);
+    	cx.strokeRect(120, 10, 100, 100);
+    	cx.closePath();
+
+    	cx.linewidth = 2;
+    	cx.fillRect(150, 150, 50, 50);
+    	cx.strokeStyle = 'red';
+    	cx.closePath();
+
+    	
+    	//清除指定的矩形
+		cx.fillRect(240, 10, 100, 100);
+		cx.clearRect(250, 20, 80, 80);
+
+    	</script>
+    	<canvas id='c4' width='400' height='400'></canvas>
+    	<script>
+    	var c4 = document.getElementById('c4');
+    	var cx = c4.getContext("2d");
+    	cx.fillStyle = '#4FDDEB';
+
+    	cx.font = '45px 宋体';
+    	// cx.shadowColor = '#222';
+    	cx.shadowOffsetX = 5;
+    	cx.shadowOffsetY = 5;
+    	// cx.shadowBlur = 1;
+    	// cx.textBaseLine = 'top'
+    	cx.fillText('你好hello', 40, 40);
+
+    	//绘制圆形
+    	cx.beginPath();
+    	cx.arc(100,100,30,0,Math.PI*2,true);
+    	cx.closePath();
+    	cx.fillStyle = 'blue';
+    	cx.fill();
+
+    	</script>
+
+    	<canvas id='c5' width='400' height='400'></canvas>
+    	<script>
+    	var c5 = document.getElementById('c5');
+    	var cx = c5.getContext("2d");
+    	//利用循环画渐变的圆
+    	for(var i=0;i<10;i++){
+    		//定义开始路径
+    		cx.beginPath();
+    		cx.arc(25*i,25*i,(i+1)*8,0,Math.PI*2,true);
+    		cx.closePath();
+    		//设置颜色
+    		cx.fillStyle='rgba(255,0,255,'+(10-i)*0.1+')';
+    		cx.fill();
+
+    	}
+
+
+
+    	</script>
+
+    	<canvas width='400' height='400' id='c6'></canvas>
+   		<script>
+   		var c6 = document.getElementById('c6');
+    	var cx = c6.getContext("2d");
+    	//绘制多边形
+    	//cx: 获取的绘制环境
+    	//n : 绘制的是n 角星 n为奇数
+    	//dx,dy : n角星的位置
+    	//size : 控制 n 角星的大小
+    	function createStar(cx,n,dx,dy,size){
+    		//定义开始路径
+    		cx.beginPath();
+    		var dig = Math.PI / n * 4;
+    		cx.moveTo(dx,dy+y);
+    		for( var i=0;i<=n;i++){
+    			var x = Math.sin(i*dig);
+    			var y = Math.cos(i*dig);
+    			//绘制当前点连接到指定点的线条
+    			cx.lineTo(x*size+dx,y*size+dy);
+    		}
+    		//关闭路径
+    		cx.closePath();
+    	}
+    	//调用 createStar
+    	createStar(cx,3,60,60,50);
+    	cx.fillStyle='red';
+    	cx.fill();
+    	//五角星
+    	createStar(cx,5,160,60,50);
+    	cx.fillStyle='green';
+    	cx.fill();
+    	//九角星
+    	createStar(cx,9,60,160,50);
+    	cx.fillStyle='yellow';
+    	cx.fill();
+
+
+   		</script>
+
+   		<canvas width='400' height='400' id='c7'></canvas>
+   		<script>
+   			var c7 = document.getElementById('c7');
+    		var cx = c7.getContext("2d");
+    		//开始绘制 1.加载一张图片
+    		var img = new Image();
+    		img.src='';
+    		//在绘制开始前.保证图片已经加载完成
+    		window.onload = function(){
+    			cx.drawImage(img,0,0,150,150);
+    		}
+
+
+   		</script>
+    </body>
+</html>
